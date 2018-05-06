@@ -1,0 +1,69 @@
+version: '3'
+
+services:
+
+  mysql:
+    container_name: ${MYSQL_CONTAINER_NAME}
+    image: mysql:${MYSQL_VERSION}
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - empreintelaville-database-data:/var/lib/mysql
+
+  adminer:
+    container_name: ${ADMINER_CONTAINER_NAME}
+    image: clue/adminer
+    environment:
+      - VIRTUAL_HOST=${ADMINER_VIRTUAL_HOST}
+    depends_on:
+      - mysql
+
+  php:
+    container_name: ${PHP_CONTAINER_NAME}
+    build:
+      context: ./.docker/php
+      dockerfile: Dockerfile-${PHP_VERSION}
+      args:
+          UID: ${CONTAINER_UID}
+    user: ${CONTAINER_UID}
+    volumes:
+      - .:/var/www/html
+      - empreintelaville-composer:/root/.composer
+    environment:
+      - SYMFONY_ENV=${SYMFONY_ENV}
+    depends_on:
+      - mysql
+
+  nginx:
+    container_name: ${NGINX_CONTAINER_NAME}
+    build:
+        context: ./.docker/nginx
+        dockerfile: Dockerfile-${NGINX_VERSION}
+        args:
+            - NGINX_PHP_BACKEND_NAME=${PHP_CONTAINER_NAME}
+            - NGINX_PHP_BACKEND_PORT=${PHP_PORT}
+            - NGINX_PUBLIC_DIR=${NGINX_PUBLIC_DIR}
+            - UID=${CONTAINER_UID}
+            - SYMFONY_ENTRYPOINT=${SYMFONY_ENTRYPOINT}
+    environment:
+      - VIRTUAL_HOST=${NGINX_VIRTUAL_HOST}
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - php
+    networks:
+      default:
+        aliases:
+          - ${NGINX_VIRTUAL_HOST}
+
+volumes:
+  empreintelaville-database-data:
+  empreintelaville-composer:
+
+networks:
+  default:
+    external:
+      name: ${NETWORK_NAME}

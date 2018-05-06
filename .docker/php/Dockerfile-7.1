@@ -1,0 +1,32 @@
+FROM php:7.1-fpm
+
+ARG UID
+RUN usermod -u $UID www-data
+
+RUN apt-get update \
+	    && apt-get install -y git libxml2-dev zlib1g-dev xvfb libfontconfig wkhtmltopdf \
+	    && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-install pdo \
+	pdo_mysql \
+	zip \
+	bcmath \
+	sockets
+
+RUN apt-get update \
+	&& apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& docker-php-ext-install -j$(nproc) iconv mcrypt gd \
+	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+
+# xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+# php.ini
+COPY php.ini /usr/local/etc/php/
+
+# install composer
+COPY install-composer.sh /tmp/install-composer.sh
+RUN chmod +x /tmp/install-composer.sh \
+	&& bash /tmp/install-composer.sh
+VOLUME /root/.composer
