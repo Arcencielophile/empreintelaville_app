@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Entity\Footprint" table="footprint">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="title" type="string" column="title" precision="0" scale="0" nullable="false"/>
+    <field name="description" type="text" column="description" precision="0" scale="0" nullable="true"/>
+    <field name="country" type="string" column="country" precision="0" scale="0" nullable="false"/>
+    <field name="city" type="string" column="city" precision="0" scale="0" nullable="false"/>
+    <field name="zipCode" type="string" column="zip_code" precision="0" scale="0" nullable="false"/>
+    <field name="address" type="string" column="address" precision="0" scale="0" nullable="false"/>
+    <field name="latitude" type="decimal" column="latitude" precision="0" scale="8" nullable="true"/>
+    <field name="longitude" type="decimal" column="longitude" precision="0" scale="8" nullable="true"/>
+    <field name="createdAt" type="datetime_immutable" column="created_at" precision="0" scale="0" nullable="false"/>
+    <one-to-many field="media" target-entity="FootprintMedia" mapped-by="footprint" fetch="LAZY">
+      <cascade>
+        <cascade-persist/>
+      </cascade>
+    </one-to-many>
+    <many-to-one field="method" target-entity="FootprintMethod" inversed-by="footprints" fetch="LAZY">
+      <join-columns>
+        <join-column name="method_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="things" target-entity="Thing" inversed-by="footprints" fetch="LAZY">
+      <join-table name="footprint_thing">
+        <join-columns>
+          <join-column name="footprint_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="thing_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>
