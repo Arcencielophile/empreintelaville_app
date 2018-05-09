@@ -68,14 +68,14 @@ class Footprint
     protected $address;
 
     /**
-     * @var decimal The city name
+     * @var decimal The footprint latitude location
      *
      * @ORM\Column(type="decimal", scale=8, nullable=true)
      */
     protected $latitude;
 
     /**
-     * @var decimal The city name
+     * @var decimal The footpring longitude location
      *
      * @ORM\Column(type="decimal", scale=8, nullable=true)
      */
