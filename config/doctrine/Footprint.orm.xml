@@ -12,7 +12,7 @@
     <field name="address" type="string" column="address" precision="0" scale="0" nullable="false"/>
     <field name="latitude" type="decimal" column="latitude" precision="0" scale="8" nullable="true"/>
     <field name="longitude" type="decimal" column="longitude" precision="0" scale="8" nullable="true"/>
-    <field name="createdAt" type="datetime_immutable" column="created_at" precision="0" scale="0" nullable="false"/>
+    <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0" nullable="false"/>
     <one-to-many field="media" target-entity="FootprintMedia" mapped-by="footprint" fetch="LAZY">
       <cascade>
         <cascade-persist/>
