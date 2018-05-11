@@ -8,8 +8,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class FootprintMethod
 {
+    /**
+     * @var int The entity Id
+     */
     private $id;
 
+    /**
+     * @var string The footprint method name
+     */
     protected $name;
 
     protected $footprints;

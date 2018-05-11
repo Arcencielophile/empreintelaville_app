@@ -8,9 +8,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class FootprintMedia
 {
-
+  /**
+   * @var int The entity Id
+   */
     private $id;
 
+    /**
+     * @var string The media name
+     */
     protected $name;
 
     protected $footprint;

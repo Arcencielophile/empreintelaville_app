@@ -8,8 +8,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Thing
 {
+
+    /**
+     * @var int The entity Id
+     */
     private $id;
 
+    /**
+     * @var string The thing name
+     */
     protected $name;
 
     protected $footprints;

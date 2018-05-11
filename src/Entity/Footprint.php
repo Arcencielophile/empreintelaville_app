@@ -8,30 +8,59 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Footprint
 {
+    /**
+     * @var int The entity Id
+     */
     private $id;
 
+    /**
+     * @var string The footprint name
+     */
     protected $title;
 
+    /**
+     * @var string The footprint description
+     */
     protected $description;
 
+    /**
+     * @var string The country name
+     */
     protected $country;
 
+
+    /**
+     * @var string The city name
+     */
     protected $city;
 
+    /**
+     * @var string The zip code
+     */
     protected $zipCode;
 
+
+    /**
+     * @var string The address
+     */
     protected $address;
+
 
     /**
      * @var decimal The footprint latitude location
      */
     protected $latitude;
 
+
     /**
      * @var decimal The footpring longitude location
      */
     protected $longitude;
 
+
+    /**
+     * @var \DateTimeInterface The footprint creation date
+     */
     protected $createdAt;
 
     protected $things;
