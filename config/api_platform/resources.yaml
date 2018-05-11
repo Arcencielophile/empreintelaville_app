@@ -1,5 +1,29 @@
 resources:
-    App\Entity\Footprint: ~
+    App\Entity\Footprint:
+      properties:
+        method:
+          attributes:
+            swagger_context:
+              type: method
+        things:
+          attributes:
+            swagger_context:
+              type: array
+              items:
+                type: things
+        media:
+          attributes:
+            swagger_context:
+              type: array
+              items:
+                $ref: '#/definitions/FootprintMedia'
     App\Entity\FootprintMedia: ~
     App\Entity\FootprintMethod: ~
-    App\Entity\Thing: ~
+    App\Entity\Thing:
+        properties:
+          footprints:
+            attributes:
+              swagger_context:
+                  type: array
+                  items:
+                    $ref: '#/definitions/Footprint'
