@@ -1,0 +1,5 @@
+resources:
+    App\Entity\Footprint: ~
+    App\Entity\FootprintMedia: ~
+    App\Entity\FootprintMethod: ~
+    App\Entity\Thing: ~
