@@ -22,8 +22,14 @@ class Footprint
 
     protected $address;
 
+    /**
+     * @var decimal The footprint latitude location
+     */
     protected $latitude;
 
+    /**
+     * @var decimal The footpring longitude location
+     */
     protected $longitude;
 
     protected $createdAt;
